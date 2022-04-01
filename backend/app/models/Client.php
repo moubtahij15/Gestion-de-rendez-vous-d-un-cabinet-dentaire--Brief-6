@@ -62,16 +62,17 @@ class Client extends DataBase {
       }
       // login client
 
-      public function login($reff){
+      public function login($data){
         // clean data
-        $reff = htmlspecialchars(strip_tags( $reff));
+        
+        $data->id_client = htmlspecialchars(strip_tags($data->id_client));
       
-        $reff = md5($reff);
+        $reff = md5($data->id_client);
 
-        $sql="select count(*) from client where id_client = :id";
+        $sql="select * from client where id_client = :id";
         $result=$this->conn->prepare($sql);
         $result->execute([':id'=>$reff]);
-        return $result->fetchColumn();
+        return $result->fetchAll(PDO::FETCH_ASSOC);
 
       }
 
