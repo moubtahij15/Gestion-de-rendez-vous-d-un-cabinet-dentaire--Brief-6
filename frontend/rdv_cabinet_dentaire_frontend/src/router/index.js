@@ -3,6 +3,7 @@ import HomeView from "../views/HomeView.vue";
 import Signup from "../views/Signup.vue";
 import Signin from "../views/Signin.vue";
 import Rdv from "../views/Rdv.vue";
+import creneauxView from "../views/creneauxView.vue";
 
 const routes = [
   {
@@ -33,6 +34,11 @@ const routes = [
     path: "/Rdv",
     name: "Rdv",
     component: Rdv,
+  },
+  {
+    path: "/creneau",
+    name: "creneau",
+    component: creneauxView,
   },
 ];
 

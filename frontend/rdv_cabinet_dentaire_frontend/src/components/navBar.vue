@@ -3,9 +3,11 @@
     <!-- Navbar -->
     <nav class="navbar navbar-expand-lg bg-dark navbar-dark py-3 fixed-top">
       <div class="container">
-        <a href="#" class="navbar-brand"
-          >Moubtahij <span class="text-warning"> Dental </span>
-        </a>
+        <router-link to="/">
+          <h5 class="navbar-brand">
+            Moubtahij <span class="text-warning"> Dental </span>
+          </h5>
+        </router-link>
 
         <button
           class="navbar-toggler"
@@ -18,14 +20,23 @@
 
         <div class="collapse navbar-collapse" id="navmenu">
           <ul class="navbar-nav ms-auto">
-            <li class="nav-item">
-              <a href="#learn" class="nav-link">Login</a>
+            <li class="nav-item" v-if="!client">
+              <router-link to="/Sign-in">
+                <h5 class="nav-link">Login</h5>
+              </router-link>
             </li>
             <li class="nav-item">
-              <a href="#questions" class="nav-link">register</a>
+              <router-link to="/Sign-up" v-if="!client">
+                <h5 class="nav-link">register</h5>
+              </router-link>
             </li>
             <li class="nav-item">
-              <a href="#instructors" class="nav-link">about</a>
+              <router-link to="/Rdv">
+                <h5 class="nav-link">appointments</h5>
+              </router-link>
+            </li>
+            <li class="nav-item" v-if="client">
+              <h5 class="nav-link" @click="logout()">Logout</h5>
             </li>
           </ul>
         </div>
@@ -36,8 +47,27 @@
 </template>
 
 <script>
+import { mapActions } from "vuex";
+
 export default {
   name: "navBar",
+  data() {
+    return {
+      client: "",
+    };
+  },
+  methods: {
+    ...mapActions(["redirectTo"]),
+
+    logout() {
+      localStorage.clear();
+
+      this.redirectTo({ val: "home" });
+    },
+  },
+  mounted() {
+    this.client = localStorage.getItem("user-info");
+  },
 };
 </script>
 
@@ -45,5 +75,15 @@ export default {
 <style>
 .navBar {
   margin-bottom: 80px;
+}
+a,
+router-link {
+  text-decoration: none;
+}
+ul {
+  list-style: none;
+}
+.nav-item {
+  cursor: pointer;
 }
 </style>

@@ -188,7 +188,8 @@ export default {
       errMsg: "",
       successMsg: "",
       RdvClient: [],
-      reff: "8Qfsq13W",
+      reff: "",
+      client_info: [],
     };
   },
   methods: {
@@ -206,8 +207,8 @@ export default {
         this.RdvClient = result.data;
 
         // save user data in local storage
-        localStorage.setItem("user-info", JSON.stringify(result.data));
-        console.log(result.data);
+        console.log(this.client_info["nom"]);
+        // console.log(JSON.parse(localStorage.getItem("user-info"))[0][0]["nom"]);
       } else {
         console.log(" login failed");
       }
@@ -215,6 +216,8 @@ export default {
   },
 
   mounted() {
+    this.client_info = JSON.parse(localStorage.getItem("user-info"))[0][0];
+    this.reff = this.client_info["id_client"];
     this.getRdv();
   },
   // async created() {

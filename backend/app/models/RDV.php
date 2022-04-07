@@ -35,7 +35,7 @@ class RDV extends DataBase{
         $sql = 'SELECT  sjt_RDV , date_creneau, heure_debut , heure_fin  FROM rdv r join creneau c on r.id_creneau =c.id_creneau  where  id_client = ?  ';
 
         $result= $this->conn->prepare($sql);
-        $id_client=md5($id_client);
+        // $id_client=md5($id_client);
         if($result->execute([$id_client])){
 
             return $result->fetchAll(PDO::FETCH_ASSOC);

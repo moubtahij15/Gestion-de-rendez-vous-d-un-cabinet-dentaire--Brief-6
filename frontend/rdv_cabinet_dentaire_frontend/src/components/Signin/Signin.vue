@@ -101,7 +101,7 @@ export default {
       if (!this.v$.$error) {
         console.log("form validate successfully");
         let result = await axios.post(
-          "http://192.168.8.73/backend/public/Client/login",
+          "http://localhost/backend/public/Client/login",
           {
             id_client: this.reff,
           }
@@ -110,9 +110,10 @@ export default {
           console.log(" Login successfully");
 
           // save user data in local storage
-          // localStorage.setItem("user-info", JSON.stringify(result.data));
           console.log(result.data);
           if (result.data.message == "success") {
+            localStorage.setItem("user-info", JSON.stringify(result.data));
+
             this.redirectTo({ val: "Rdv" });
           } else {
             this.errMsg = "wrong! reference";
