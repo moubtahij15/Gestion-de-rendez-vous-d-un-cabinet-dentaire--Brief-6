@@ -1,36 +1,6 @@
 <template>
   <navBar /><!-- Showcase -->
 
-  <!-- <form action="#" @click.prevent>
-    <div class="row g-3 align-items-center">
-      <div class="col-auto d-block mx-auto">
-        <input
-          type="text"
-          class="form-control"
-          placeholder="Refference"
-          v-model="reff"
-        />
-      </div>
-    </div>
-    <br />
-    <div class="row g-3 align-items-center">
-      <div class="col-auto d-block mx-auto">
-        <button type="submit" class="btn btn-primary" @click="signInNow()">
-          Login
-        </button>
-        &nbsp;&nbsp;&nbsp;
-        <button
-          type="button"
-          class="btn btn-primary"
-          @click="redirectTo({ val: 'Sign-up' })"
-        >
-          Sign Up
-        </button>
-      </div>
-    </div>
-    <br />
-  </form> -->
-
   <section class="vh-100 gradient-custom">
     <div class="container py-5 h-100">
       <div class="row d-flex justify-content-center align-items-center h-100">
@@ -38,6 +8,20 @@
           <div class="card bg-dark text-white" style="border-radius: 1rem">
             <div class="card-body p-5 text-center">
               <div class="mb-md-5 mt-md-4 pb-5">
+                <!-- show success message -->
+                <div
+                  class="alert alert-danger alert-dismissible fade show"
+                  role="alert"
+                  v-if="errMsg"
+                >
+                  {{ errMsg }}
+                  <button
+                    type="button"
+                    class="btn-close"
+                    data-bs-dismiss="alert"
+                    aria-label="close"
+                  ></button>
+                </div>
                 <h2 class="fw-bold mb-2 text-uppercase">Login</h2>
                 <p class="text-white-50 mb-5">Please enter your Refference!</p>
 
@@ -102,6 +86,7 @@ export default {
     return {
       v$: useValidate(),
       reff: "",
+      errMsg: "",
     };
   },
   validations() {
@@ -116,7 +101,7 @@ export default {
       if (!this.v$.$error) {
         console.log("form validate successfully");
         let result = await axios.post(
-          "http://localhost/backend/public/Client/login",
+          "http://192.168.8.73/backend/public/Client/login",
           {
             id_client: this.reff,
           }
@@ -125,8 +110,13 @@ export default {
           console.log(" Login successfully");
 
           // save user data in local storage
-          localStorage.setItem("user-info", JSON.stringify(result.data));
+          // localStorage.setItem("user-info", JSON.stringify(result.data));
           console.log(result.data);
+          if (result.data.message == "success") {
+            this.redirectTo({ val: "Rdv" });
+          } else {
+            this.errMsg = "wrong! reference";
+          }
         } else {
           console.log(" login failed");
         }

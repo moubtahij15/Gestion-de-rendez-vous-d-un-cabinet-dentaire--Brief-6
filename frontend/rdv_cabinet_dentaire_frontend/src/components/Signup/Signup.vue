@@ -7,14 +7,25 @@
           <div class="card bg-dark text-white" style="border-radius: 1rem">
             <div class="card-body p-5 text-center">
               <div class="mb-md-5 mt-md-4 pb-5">
-                <h2 class="fw-bold mb-2 text-uppercase">Register</h2>
+                <h2
+                  class="fw-bold mb-2 text-uppercase"
+                  data-toggle="modal"
+                  data-target="#exampleModal"
+                >
+                  Register
+                </h2>
                 <p class="text-white-50 mb-5">
                   Please enter your information !
                 </p>
                 <div class="alert alert-success" role="alert" v-if="reff">
                   your refference is {{ reff }}
                 </div>
-                <form action="#" ref="registerForm" @click.prevent>
+                <form
+                  action="#"
+                  ref="registerForm"
+                  name="myForm"
+                  @click.prevent
+                >
                   <div class="row">
                     <div class="col-md-6 mb-4">
                       <div class="form-outline">
@@ -81,6 +92,8 @@
                     class="btn btn-outline-light btn-lg px-5"
                     type="submit"
                     @click="signUpNow()"
+                    data-bs-toggle="modal"
+                    data-bs-target="#exampleModal"
                   >
                     Register
                   </button>
@@ -126,6 +139,7 @@ export default {
       date_naissance: "",
       email: "",
       reff: "",
+      showM: "",
     };
   },
   validations() {
@@ -151,11 +165,18 @@ export default {
             date_naissance: this.date_naissance,
           }
         );
+
         if (result.status == 200) {
+          // var frm = document.getElementsByName("myForm");
+
+          // frm.reset(); // Reset
+          this.nom = "";
+          this.prenom = "";
+          this.email = "";
+          this.date_naissance = "";
+
           console.log("add client successfully");
           this.reff = result.data.message;
-          this.nom = "";
-
           // save user data in local storage
           // localStorage.setItem("user-info", JSON.stringify(result.data));
           console.log(result.data.message);

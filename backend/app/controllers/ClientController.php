@@ -57,9 +57,12 @@ class ClientController
 
                   if ($result) {
 
-                        echo json_encode($result);
+                        echo json_encode(
+                              array('message' => 'success',
+                              $result)
+                        );
                   } else  echo json_encode(
-                        array('message' => 'failed login')
+                        array('message' => 'failed')
                   );
             } else  echo json_encode(
                   array('message' => 'change method to Post')

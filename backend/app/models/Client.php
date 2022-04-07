@@ -46,6 +46,7 @@ class Client extends DataBase {
         $age=$this->getAge($data->date_naissance);
 
 
+
         if(!$this->read_single($id_client)){
           $sql="INSERT INTO `client` (`id_client`, `nom`, `prenom`, `age`, `date_naissance`, `email`) VALUES (:id_client,:nom ,:prenom ,:age ,:date_naissance ,:email )";
           $result=$this->conn->prepare($sql);

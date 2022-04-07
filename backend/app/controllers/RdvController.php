@@ -17,13 +17,19 @@ class RdvController {
     }
    
       // reads rdv for single client
-      public function read($id_client){
+      public function read(){              
+        
+        $data= json_decode(file_get_contents("php://input"));
 
-        if($_SERVER["REQUEST_METHOD"] == "GET"){ 
+        
+  
+
+        if($_SERVER["REQUEST_METHOD"] == "POST"){
+
             $RDV = new RDV();
 
             // Blog post query
-            $result = $RDV->read($id_client);
+            $result = $RDV->read($data->reff);
            
             // Turn to JSON & output
             if($result){
