@@ -63,7 +63,11 @@
           <td>{{ elem.date_creneau }}</td>
           <td>{{ elem.heure_debut }}</td>
           <td>{{ elem.heure_fin }}</td>
-          <td><button class="btn btn-danger">delete</button></td>
+          <td>
+            <button class="btn btn-danger" @click="deleteRdv(elem)">
+              delete
+            </button>
+          </td>
 
           <td>
             <button
@@ -195,6 +199,7 @@ export default {
       RdvClient: [],
       reff: "",
       client_info: [],
+      id_rdv: "",
     };
   },
   methods: {
@@ -216,6 +221,20 @@ export default {
         // console.log(JSON.parse(localStorage.getItem("user-info"))[0][0]["nom"]);
       } else {
         console.log(" login failed");
+      }
+    },
+    async deleteRdv(elem) {
+      let result = await axios.post(
+        "http://localhost/backend/public/Rdv/delete/ " + elem.id_RDV
+      );
+      if (result.status == 200) {
+        console.log("  successfully");
+        if (result.data.message == "deleted") {
+          this.successMsg = "Bien deleted";
+          this.getRdv();
+        }
+      } else {
+        console.log(" delete failed");
       }
     },
   },

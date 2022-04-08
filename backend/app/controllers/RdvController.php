@@ -112,21 +112,21 @@ class RdvController {
               // delete RDV
               
               public function delete($id_RDV){
-                if($_SERVER["REQUEST_METHOD"] == "DELETE"){
+                if($_SERVER["REQUEST_METHOD"] == "POST"){
                   $RDV = new RDV();
 
                   
                       if($RDV->delete($id_RDV)){
 
                       echo json_encode(
-                        array('message' => 'RDV deleted')
+                        array('message' => 'deleted')
                       );
                       }else { 
                       echo json_encode(
-                      array('message' => 'RDV Not deleted')
+                      array('message' => 'deleted')
                       );
                       }
-
+                    
                       }else echo json_encode(
                         array('message' => 'change method to DELETE')
                       );

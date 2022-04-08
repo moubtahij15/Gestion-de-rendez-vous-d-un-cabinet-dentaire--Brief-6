@@ -32,7 +32,7 @@ class RDV extends DataBase{
     public function  read($id_client){
 
 
-        $sql = 'SELECT  sjt_RDV , date_creneau, heure_debut , heure_fin  FROM rdv r join creneau c on r.id_creneau =c.id_creneau  where  id_client = ?  ';
+        $sql = 'SELECT id_RDV, sjt_RDV , date_creneau, heure_debut , heure_fin  FROM rdv r join creneau c on r.id_creneau =c.id_creneau  where  id_client = ?  ';
 
         $result= $this->conn->prepare($sql);
         // $id_client=md5($id_client);

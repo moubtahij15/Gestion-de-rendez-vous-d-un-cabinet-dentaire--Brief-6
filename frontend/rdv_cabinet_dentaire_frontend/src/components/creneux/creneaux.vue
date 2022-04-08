@@ -202,10 +202,10 @@ export default {
         if (result.status == 200) {
           // save user data    local storage
           console.log(result.data);
-          this.sjt_RDV = "";
-          this.date_creneau = "";
+          // this.sjt_RDV = "";
+          // this.date_creneau = "";
           // location.reload();
-
+          this.getCreneaux();
           // console.log(JSON.parse(localStorage.getItem("user-info"))[0][0]["nom"]);
           this.successMsg = "Bien passe le rendez-Vous";
         } else {
@@ -213,7 +213,7 @@ export default {
         }
       } else {
         console.log("form  failed");
-        this.errMsg += " && enter sjt ";
+        this.errMsg = " && enter sjt ";
       }
     },
   },
