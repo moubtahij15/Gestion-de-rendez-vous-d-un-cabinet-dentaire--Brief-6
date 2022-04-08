@@ -21,12 +21,13 @@ class CreneauController
 
 
     //read all creneau dispo
-    public function read($date)
+    public function read()
     {
-        if ($_SERVER["REQUEST_METHOD"] == "GET") {
+        if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $creneau = new Creneau();
+            $data= json_decode(file_get_contents("php://input"));
 
-            $result = $creneau->read($date);
+            $result = $creneau->read($data->date);
 
             if ($result) {
                 echo json_encode($result);

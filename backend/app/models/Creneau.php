@@ -28,7 +28,8 @@ class Creneau extends DataBase {
 
     // get all creneau dispo
     public function read($date){
-        
+      if(isset($date)){
+
         $sql="SELECT * FROM `creneau` WHERE creneau.id_creneau not in( SELECT id_creneau FROM `rdv` WHERE date_creneau= :date ) ";
         
         $result=$this->conn->prepare($sql);
@@ -38,6 +39,9 @@ class Creneau extends DataBase {
           return $result->fetchAll(PDO::FETCH_ASSOC);
         
         }else return false;
+      }else return false  ;
+        
+       
 
     }
   

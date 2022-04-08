@@ -2,14 +2,19 @@
   <div class="container">
     <!-- show add rdv Button -->
     <div class="col-lg-12 mt-5">
-      <button class="float-end btn btn-info">add new appointment</button>
+      <button
+        class="float-end btn btn-info"
+        @click="redirectTo({ val: 'creneau' })"
+      >
+        add new appointment
+      </button>
       <button class="float-start btn btn-danger" v-if="RdvClient.length > 0">
         delete all appointment
       </button>
     </div>
     <div class="clearfix"></div>
     <hr class="bg-info" />
-    <!-- show success message -->
+    <!-- show success and error message -->
     <div
       class="alert alert-danger alert-dismissible fade show"
       role="alert"

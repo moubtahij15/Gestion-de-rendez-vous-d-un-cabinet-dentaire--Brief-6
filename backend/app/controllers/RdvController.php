@@ -62,18 +62,18 @@ class RdvController {
                     $data= json_decode(file_get_contents("php://input"));
                    
                    
-                   print_r(json_encode($data)) ;
-                    // create product
-                //     if($RDV- >create($data)){
+                  //  print_r(json_encode($data)) ;
+                    // create rdv
+                    if($RDV->create($data)){
 
-                //     echo json_encode(
-                //             array('message' => 'RDV Created')
-                //             );
-                // }else { 
-                //         echo json_encode(
-                //         array('message' => 'RDV Not Created')
-                //         );
-                // }
+                    echo json_encode(
+                            array('message' => 'RDV Created')
+                            );
+                }else { 
+                        echo json_encode(
+                        array('message' => 'RDV Not Created')
+                        );
+                }
 
               } else  echo json_encode(
                       array('message' => 'change method to Post')
