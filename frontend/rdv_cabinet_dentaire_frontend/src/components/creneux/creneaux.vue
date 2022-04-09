@@ -1,6 +1,8 @@
 <template>
   <div class="container">
-    <h1 class="text-center text-white">choose your creneaux :</h1>
+    <h1 class="text-center text-white">
+      choose your creneaux : {{ $root.title }}
+    </h1>
     <!-- show success message -->
     <div
       class="alert alert-danger alert-dismissible fade show"

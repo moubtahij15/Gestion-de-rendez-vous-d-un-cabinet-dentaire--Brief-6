@@ -64,7 +64,11 @@
           <td>{{ elem.heure_debut }}</td>
           <td>{{ elem.heure_fin }}</td>
           <td>
-            <button class="btn btn-danger" @click="deleteRdv(elem)">
+            <button
+              class="btn btn-danger"
+              v-if="RdvClient.length > 0"
+              @click="deleteRdv(elem)"
+            >
               delete
             </button>
           </td>
@@ -74,6 +78,8 @@
               class="btn btn-warning"
               data-bs-toggle="modal"
               data-bs-target="#exampleModal"
+              v-if="RdvClient.length > 0"
+              @click="updateRdv(elem)"
             >
               Edit
             </button>
@@ -85,6 +91,7 @@
     <!-- Button trigger modal -->
 
     <!-- Modal -->
+    <!-- Modal -->
     <div
       class="modal fade"
       id="exampleModal"
@@ -95,7 +102,9 @@
       <div class="modal-dialog">
         <div class="modal-content">
           <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLabel">Edit Rdv</h5>
+            <h5 class="modal-title" id="exampleModalLabel">
+              Sujet rendez-vous
+            </h5>
             <button
               type="button"
               class="btn-close"
@@ -104,80 +113,32 @@
             ></button>
           </div>
           <div class="modal-body">
-            <!-- corps modal -->
-            <form action="#" ref="registerForm" name="myForm" @click.prevent>
-              <div class="row">
-                <div class="col-md-6 mb-4">
-                  <div class="form-outline">
-                    <input
-                      type="text"
-                      id="form3Example1"
-                      class="form-control"
-                      placeholder="First name"
-                      v-model="nom"
-                    />
-                    <!-- <span class="error-feedback" v-if="v$.nom.$error">{{
-                      v$.nom.$errors[0].$message
-                    }}</span> -->
-                  </div>
-                </div>
-                <div class="col-md-6 mb-4">
-                  <div class="form-outline">
-                    <input
-                      type="text"
-                      id="form3Example2"
-                      class="form-control"
-                      placeholder="Last name"
-                      v-model="prenom"
-                    />
-                    <!-- <span class="error-feedback" v-if="v$.prenom.$error">{{
-                      v$.prenom.$errors[0].$message
-                    }}</span> -->
-                  </div>
-                </div>
-              </div>
-              <br />
-
-              <div class="form-outline form-white mb-4">
-                <input
-                  type="email"
-                  id="typeEmailX"
-                  class="form-control form-control-lg"
-                  placeholder="Email "
-                  v-model="email"
-                />
-                <!-- <span class="error-feedback" v-if="v$.email.$error">{{
-                  v$.email.$errors[0].$message
-                }}</span> -->
-              </div>
-              <br />
-
-              <div class="form-outline form-white mb-4">
+            <div class="form-outline form-white mb-4">
+              <form action="" @click.prevent>
                 <input
                   type="text"
-                  placeholder="date naissance"
+                  id="typeEmailX"
                   class="form-control form-control-lg"
-                  onfocus="(this.type = 'date')"
-                  v-model="date_naissance"
+                  placeholder="Sujet de votre rendez-vous "
+                  v-model="sjt_RDV"
+                  required
                 />
-                <!-- <span class="error-feedback" v-if="v$.date_naissance.$error">{{
-                  v$.date_naissance.$errors[0].$message
+                <!-- <span class="error-feedback" v-if="v$.sjt_RDV.$error">{{
+                  v$.sjt_RDV.$errors[0].$message
                 }}</span> -->
-              </div>
-              <br />
-              <div class="modal-footer">
-                <button
-                  type="button"
-                  class="btn btn-secondary"
-                  data-bs-dismiss="modal"
-                >
-                  Close
-                </button>
-                <button type="button" class="btn btn-primary">
-                  Save changes
-                </button>
-              </div>
-            </form>
+
+                <div class="modal-footer">
+                  <button
+                    type="submit"
+                    class="btn btn-primary"
+                    data-bs-dismiss="modal"
+                    @click="affiche()"
+                  >
+                    valider rendez vous
+                  </button>
+                </div>
+              </form>
+            </div>
           </div>
         </div>
       </div>
@@ -200,6 +161,9 @@ export default {
       reff: "",
       client_info: [],
       id_rdv: "",
+      sjt_RDV: "",
+      id_creneau: "",
+      date_creneau: "",
     };
   },
   methods: {
@@ -237,12 +201,53 @@ export default {
         console.log(" delete failed");
       }
     },
+    updateRdv(elem) {
+      this.id_creneau = elem.id_creneau;
+      this.date_creneau = elem.date_creneau;
+      this.id_RDV = elem.id_RDV;
+      this.sjt_RDV = elem.sjt_RDV;
+      // console.log("update");
+      // console.log("id RDV " + this.id_RDV);
+      // console.log("sjt RDV  " + this.sjt_RDV);
+      // console.log("date crene : " + this.date_creneau);
+      // console.log("id client " + this.reff);
+      // console.log("id crenau" + this.id_creneau);
+      // console.log(elem.id_RDV);
+      // console.log(this.sjt_RDV);
+      // console.log(elem.date_creneau);
+      // console.log(this.reff);
+      // console.log(elem.id_creneau);
+    },
+    async affiche() {
+      let result = await axios.post(
+        "http://localhost/backend/public/Rdv/update",
+        {
+          id_RDV: this.id_RDV,
+          sjt_RDV: this.sjt_RDV,
+          date_creneau: this.date_creneau,
+          id_client: this.reff,
+          id_creneau: this.id_creneau,
+        }
+      );
+      if (result.status == 200) {
+        if (result.data.message == "updated") {
+          console.log("  successfully");
+          this.successMsg = "Bien updated";
+          this.getRdv();
+        } else {
+          console.log("  not");
+        }
+      } else {
+        console.log(" delete failed");
+      }
+    },
   },
 
   mounted() {
     this.client_info = JSON.parse(localStorage.getItem("user-info"))[0][0];
     this.reff = this.client_info["id_client"];
     this.getRdv();
+    this.$emit("myEvent", "eventValueOne");
   },
   // async created() {
   //   let result = await axios

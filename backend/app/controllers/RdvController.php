@@ -85,7 +85,7 @@ class RdvController {
 
             public function update(){
 
-              if($_SERVER["REQUEST_METHOD"] == "PUT"){
+              if($_SERVER["REQUEST_METHOD"] == "POST"){
 
                     $RDV = new RDV();
 
@@ -95,7 +95,7 @@ class RdvController {
                       if($RDV->update($data)){
 
                           echo json_encode(
-                              array('message' => 'RDV updated')
+                              array('message' => 'updated')
                             );
                       }else { 
                           echo json_encode(
