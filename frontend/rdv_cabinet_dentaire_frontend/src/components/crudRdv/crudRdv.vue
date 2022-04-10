@@ -2,7 +2,6 @@
   <div class="container">
     <!-- show add rdv Button -->
     <div class="col-lg-12 mt-5">
-      <span style="color: white"> {{ $store.state.test }} </span>
       <br />
       <!-- <button class="float-center btn btn-info" @click="$store.commit('set')">
         Teest
@@ -148,7 +147,7 @@
                     type="submit"
                     class="btn btn-primary"
                     data-bs-dismiss="modal"
-                    @click="affiche()"
+                    @click="update()"
                   >
                     valider rendez vous
                   </button>
@@ -248,7 +247,7 @@ export default {
         this.$store.dispatch("setAction", this.payload);
       this.redirectTo({ val: "creneau" });
     },
-    async affiche() {
+    async update() {
       let result = await axios.post(
         "http://localhost/backend/public/Rdv/update",
         {
@@ -278,6 +277,9 @@ export default {
     this.reff = this.client_info["id_client"];
 
     this.getRdv();
+    if (this.$store.state.succesMsg) {
+      this.successMsg = this.$store.state.succesMsg;
+    }
   },
   // async created() {
   //   let result = await axios

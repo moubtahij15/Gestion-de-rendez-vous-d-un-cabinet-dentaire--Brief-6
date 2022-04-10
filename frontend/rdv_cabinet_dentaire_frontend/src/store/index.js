@@ -13,6 +13,7 @@ const mutations = {
     state.date_creneau = payload.date_creneau;
     state.id_client = payload.id_client;
     state.id_creneau = payload.id_creneau;
+    state.succesMsg = " Bien Updated";
     // return payload.state.id_client;
   },
   reset(state) {
@@ -21,6 +22,9 @@ const mutations = {
     state.date_creneau = "";
     state.id_client = "";
     state.id_creneau = "";
+  },
+  resetMsg(state) {
+    state.succesMsg = "";
   },
 };
 
@@ -41,7 +45,7 @@ export default createStore({
     date_creneau: "",
     id_client: "",
     id_creneau: "",
-    succesMsg: "Bien Updated",
+    succesMsg: "",
   },
   getters,
   mutations,

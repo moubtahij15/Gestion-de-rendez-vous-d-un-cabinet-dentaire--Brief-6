@@ -200,13 +200,11 @@ export default {
       if (result.status == 200) {
         if (result.data.message == "updated") {
           console.log("  successfully");
-          this.successMsg = "Bien updated";
-          this.getRdv();
         } else {
           console.log("  not");
         }
       } else {
-        console.log(" delete failed");
+        console.log(" update failed");
       }
     },
     passingData(elem) {
@@ -219,6 +217,7 @@ export default {
       if (this.$store.state.sjt_RDV) {
         this.updateRdv();
         this.$store.commit("reset");
+        this.redirectTo({ val: "Rdv" });
       }
     },
     async validerRdv() {
