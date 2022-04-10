@@ -1,8 +1,12 @@
 <template>
   <div class="container">
-    <h1 class="text-center text-white">
-      choose your creneaux : {{ $root.title }}
-    </h1>
+    <h1 class="text-center text-white">choose your creneaux :</h1>
+
+    <span style="color: white"> {{ $store.state.id_RDV }} </span><br />
+    <!-- <span style="color: white"> {{ $store.state.sjt_RDV }} </span><br />
+    <span style="color: white"> {{ $store.state.date_creneau }} </span><br />
+    <span style="color: white"> {{ $store.state.id_creneau }} </span><br />
+    <span style="color: white"> {{ $store.state.id_client }} </span><br /> -->
     <!-- show success message -->
     <div
       class="alert alert-danger alert-dismissible fade show"
@@ -84,6 +88,7 @@
     tabindex="-1"
     aria-labelledby="exampleModalLabel"
     aria-hidden="true"
+    v-if="!$store.state.sjt_RDV"
   >
     <div class="modal-dialog">
       <div class="modal-content">
@@ -148,6 +153,7 @@ export default {
       id_creneau: "",
       successMsg: "",
       errMsg: "",
+      payload: "btoo  ",
     };
   },
   validations() {
@@ -180,12 +186,40 @@ export default {
         this.errMsg = "choose date please";
       }
     },
+    async updateRdv() {
+      let result = await axios.post(
+        "http://localhost/backend/public/Rdv/update",
+        {
+          id_RDV: this.$store.state.id_RDV,
+          sjt_RDV: this.$store.state.sjt_RDV,
+          date_creneau: this.date_creneau,
+          id_client: this.$store.state.id_client,
+          id_creneau: this.id_creneau,
+        }
+      );
+      if (result.status == 200) {
+        if (result.data.message == "updated") {
+          console.log("  successfully");
+          this.successMsg = "Bien updated";
+          this.getRdv();
+        } else {
+          console.log("  not");
+        }
+      } else {
+        console.log(" delete failed");
+      }
+    },
     passingData(elem) {
       this.sjt_RDV = "";
       this.client_info = JSON.parse(localStorage.getItem("user-info"))[0][0];
       this.id_client = this.client_info["id_client"];
       this.id_creneau = elem.id_creneau;
       console.log(elem);
+      //update date rdv
+      if (this.$store.state.sjt_RDV) {
+        this.updateRdv();
+        this.$store.commit("reset");
+      }
     },
     async validerRdv() {
       this.v$.$validate();
@@ -231,8 +265,11 @@ export default {
     // this.reff = this.client_info["id_client"];
 
     this.getCreneaux();
+    // eslint-disable-next-line no-undef
+    console.log(this.$store.state.id_client);
 
-    // console.log(this.date_creneau);
+    // console.log(this.$store.commit("set"));
+    // console.log(this.$store.dispatch("setAction", this.payload));
   },
 };
 </script>

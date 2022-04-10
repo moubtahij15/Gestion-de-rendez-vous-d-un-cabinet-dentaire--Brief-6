@@ -2,6 +2,11 @@
   <div class="container">
     <!-- show add rdv Button -->
     <div class="col-lg-12 mt-5">
+      <span style="color: white"> {{ $store.state.test }} </span>
+      <br />
+      <!-- <button class="float-center btn btn-info" @click="$store.commit('set')">
+        Teest
+      </button> -->
       <button
         class="float-end btn btn-info"
         @click="redirectTo({ val: 'creneau' })"
@@ -126,8 +131,19 @@
                 <!-- <span class="error-feedback" v-if="v$.sjt_RDV.$error">{{
                   v$.sjt_RDV.$errors[0].$message
                 }}</span> -->
+                <h5>you wanna change the date ?</h5>
+                <button
+                  type="submit"
+                  class="btn btn-warning"
+                  data-bs-dismiss="modal"
+                  @click="updateDateCreneau()"
+                >
+                  change the date
+                </button>
+                <br />
 
                 <div class="modal-footer">
+                  <br />
                   <button
                     type="submit"
                     class="btn btn-primary"
@@ -164,6 +180,7 @@ export default {
       sjt_RDV: "",
       id_creneau: "",
       date_creneau: "",
+      payload: {},
     };
   },
   methods: {
@@ -206,6 +223,7 @@ export default {
       this.date_creneau = elem.date_creneau;
       this.id_RDV = elem.id_RDV;
       this.sjt_RDV = elem.sjt_RDV;
+
       // console.log("update");
       // console.log("id RDV " + this.id_RDV);
       // console.log("sjt RDV  " + this.sjt_RDV);
@@ -217,6 +235,18 @@ export default {
       // console.log(elem.date_creneau);
       // console.log(this.reff);
       // console.log(elem.id_creneau);
+    },
+
+    updateDateCreneau() {
+      (this.payload = {
+        id_RDV: this.id_RDV,
+        sjt_RDV: this.sjt_RDV,
+        date_creneau: this.date_creneau,
+        id_client: this.reff,
+        id_creneau: this.id_creneau,
+      }),
+        this.$store.dispatch("setAction", this.payload);
+      this.redirectTo({ val: "creneau" });
     },
     async affiche() {
       let result = await axios.post(
@@ -242,12 +272,12 @@ export default {
       }
     },
   },
-
+  computed: {},
   mounted() {
     this.client_info = JSON.parse(localStorage.getItem("user-info"))[0][0];
     this.reff = this.client_info["id_client"];
+
     this.getRdv();
-    this.$emit("myEvent", "eventValueOne");
   },
   // async created() {
   //   let result = await axios
