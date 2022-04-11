@@ -17,6 +17,7 @@
               class="btn btn-primary btn-lg"
               data-bs-toggle="modal"
               data-bs-target="#enroll"
+              @click="redirectTo({ val: 'Sign-in' })"
             >
               SCHEDULE APPOINTMENT
             </button>
@@ -35,11 +36,15 @@
 <script>
 // @ is an alias to /src
 import navBar from "@/components/navBar.vue";
+import { mapActions } from "vuex";
 
 export default {
   name: "HomeView",
   components: {
     navBar,
+  },
+  methods: {
+    ...mapActions(["redirectTo"]),
   },
 };
 </script>
