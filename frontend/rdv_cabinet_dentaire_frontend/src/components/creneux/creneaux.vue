@@ -2,7 +2,7 @@
   <div class="container">
     <h1 class="text-center text-white">choose your creneaux :</h1>
 
-    <span style="color: white"> {{ $store.state.id_RDV }} </span><br />
+    <!-- <span style="color: white"> {{ $store.state.id_RDV }} </span><br /> -->
     <!-- <span style="color: white"> {{ $store.state.sjt_RDV }} </span><br />
     <span style="color: white"> {{ $store.state.date_creneau }} </span><br />
     <span style="color: white"> {{ $store.state.id_creneau }} </span><br />

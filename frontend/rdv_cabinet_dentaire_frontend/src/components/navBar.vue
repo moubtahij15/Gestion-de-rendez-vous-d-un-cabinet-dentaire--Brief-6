@@ -25,12 +25,12 @@
                 <h5 class="nav-link">Login</h5>
               </router-link>
             </li>
-            <li class="nav-item">
-              <router-link to="/Sign-up" v-if="!client">
+            <li class="nav-item" v-if="!client">
+              <router-link to="/Sign-up">
                 <h5 class="nav-link">register</h5>
               </router-link>
             </li>
-            <li class="nav-item">
+            <li class="nav-item" v-if="client">
               <router-link to="/Rdv">
                 <h5 class="nav-link">appointments</h5>
               </router-link>
