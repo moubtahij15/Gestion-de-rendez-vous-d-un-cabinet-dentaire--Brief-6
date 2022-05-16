@@ -1,6 +1,6 @@
 Gestion-de-rendez-vous-d-un-cabinet-dentaire--Brief-6
 # voila le lien de presentation 
-https://docs.google.com/presentation/d/12PHM4-K6zG2VaO54f39t7f-u0Zw6PS4i2qXDrHYQbmc/edit?usp=sharing
+https://docs.google.com/presentation/d/1FTh6nWdwjmSOB5F44M02_Iex7H3wAtj_xdcuNLcbu5w/edit#slide=id.g12a5953cafb_0_0
 
 Un cabinet dentaire souhaite informatiser son système de prise de rendez-vous, afin d'offrir aux utilisateurs la possibilité de renseigner leurs informations et de réserver des créneaux pour leurs visites.
 
